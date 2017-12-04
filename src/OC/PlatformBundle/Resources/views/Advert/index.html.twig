@@ -1,0 +1,44 @@
+{# src/OC/PlatformBundle/Resources/views/Advert/index.html.twig #}
+
+{% extends "OCPlatformBundle::layout.html.twig" %}
+
+{% block title %}
+  Accueil - {{ parent() }}
+{% endblock %}
+
+{% block ocplatform_body %}
+
+  <h2>Liste des annonces</h2>
+
+  <div class="list-group">
+
+  {% for advert in listAdverts %}
+
+  <a href="{{ path('oc_platform_view', {'id': advert.id}) }}" class="list-group-item list-group-item-action flex-column align-items-start">
+    <div class="d-flex w-100 justify-content-between">
+      <div class="p-2"><h4 class="mb-1">{{ advert.title }}</h4></div>
+      <div class="p-2"><small class="text-muted">{{ advert.date|date('d/m/Y') }}</small></div>
+    </div>
+    <br />
+    <p class="mb-1">{{ advert.content }}</p>
+    <small>{{ advert.author }}</small>
+  </a>
+  {% else %}
+    <div class="d-flex w-100 justify-content-between">
+      <h5 class="mb-1">Pas encore d'annonces</h5>
+    </div>
+  {% endfor %}
+  </div>
+  <ul class="pagination">
+  {% if page == 0 %}
+  
+  {else}
+  {% for p in range(1, nbPages) %}
+    <li{% if p == page %} class="active"{% endif %}>
+      <a href="{{ path('oc_platform_home', {'page': p}) }}">{{ p }}</a>
+    </li>
+  {% endfor %}
+  {% endif %}
+</ul>
+
+{% endblock %}
